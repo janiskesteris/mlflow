@@ -79,7 +79,8 @@ def workflow(als_max_iter, keras_hidden_units, max_row_limit):
         os.environ['SPARK_CONF_DIR'] = os.path.abspath('.')
         git_commit = active_run.data.tags.get(mlflow_tags.MLFLOW_GIT_COMMIT)
         load_raw_data_run = _get_or_run("load_raw_data", {}, git_commit)
-        ratings_csv_uri = os.path.join(load_raw_data_run.info.artifact_uri, "ratings-csv-dir")
+        # ratings_csv_uri = os.path.join(load_raw_data_run.info.artifact_uri, "ratings-csv-dir")
+        ratings_csv_uri = '%s/%s' % (load_raw_data_run.info.artifact_uri, "ratings-csv-dir")
         etl_data_run = _get_or_run("etl_data",
                                    {"ratings_csv": ratings_csv_uri,
                                     "max_row_limit": max_row_limit},
